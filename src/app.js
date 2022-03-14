@@ -39,92 +39,75 @@ app.get("/", (req, res) => {
   );
 });
 
-//get user with id
-app.get(
-  "/user/:id",
-  asyncWrapper(async (req, res) => {
-    const { id: userId } = req.params;
-    const user = await User.findOne({
-      where: { id: userId },
-      include: User_detail,
-    });
-    if (!user) {
-      res.json({ msg: `No user with id: ${userId}` });
-    }
-    const userDetail = await user.getUser_detail();
-    res.status(200).json(userDetail);
-  })
-);
+// // //get userdetails of an user_id
+// // app.get(
+// //   "/userdetail/:id",
+// //   asyncWrapper(async (req, res) => {
+// //     const { id: userId } = req.params;
+// //     const user = await User.findOne({
+// //       // include: "attendance_list",
+// //       where: { id: userId },
+// //     });
+// //     if (!user) {
+// //       res.json(`No user with id: ${userId}`);
+// //     }
+// //     const userDetail = await user.getUser_detail();
+// //     if (!userDetail) {
+// //       res.json(`No detail for user with id: ${userId}`);
+// //     }
+// //     // console.log(userDetail instanceof User_detail);
 
-//get userdetails of an user_id
-app.get(
-  "/userdetail/:id",
-  asyncWrapper(async (req, res) => {
-    const { id: userId } = req.params;
-    const user = await User.findOne({
-      // include: "attendance_list",
-      where: { id: userId },
-    });
-    if (!user) {
-      res.json(`No user with id: ${userId}`);
-    }
-    const userDetail = await user.getUser_detail();
-    if (!userDetail) {
-      res.json(`No detail for user with id: ${userId}`);
-    }
-    // console.log(userDetail instanceof User_detail);
+// //     // const userDetail = await User_detail.findAll({ include: User });
+// //     // console.log(userDetail);
+// //     res.status(200).json(userDetail);
+// //   })
+// // );
 
-    // const userDetail = await User_detail.findAll({ include: User });
-    // console.log(userDetail);
-    res.status(200).json(userDetail);
-  })
-);
+// //post user detail with user_id
+// app.post(
+//   "/userdetail",
+//   asyncWrapper(async (req, res) => {
+//     const {
+//       first_name,
+//       last_name,
+//       gender,
+//       dob,
+//       contact,
+//       address,
+//       email,
+//       user_id,
+//       department_id,
+//     } = req.body;
 
-//post user detail with user_id
-app.post(
-  "/userdetail",
-  asyncWrapper(async (req, res) => {
-    const {
-      first_name,
-      last_name,
-      gender,
-      dob,
-      contact,
-      address,
-      email,
-      user_id,
-      department_id,
-    } = req.body;
+//     const user = await User.findOne({ where: { id: user_id } });
+//     if (!user) {
+//       res.json(`No user with id: ${user_id}`);
+//     }
+//     const userDetail = await User_detail.create({
+//       first_name,
+//       last_name,
+//       gender,
+//       dob,
+//       contact,
+//       address,
+//       email,
+//       user_id: user.id,
+//       department_id,
+//     });
 
-    const user = await User.findOne({ where: { id: user_id } });
-    if (!user) {
-      res.json(`No user with id: ${user_id}`);
-    }
-    const userDetail = await User_detail.create({
-      first_name,
-      last_name,
-      gender,
-      dob,
-      contact,
-      address,
-      email,
-      user_id: user.id,
-      department_id,
-    });
+//     res.status(200).json(userDetail);
+//   })
+// );
 
-    res.status(200).json(userDetail);
-  })
-);
-
-//delete user
-app.delete("/user/:id", async (req, res) => {
-  const { id: userId } = req.params;
-  const user = await User.destroy({ where: { id: userId } });
-  if (!user) {
-    res.json({ msg: `No user with id: ${userId}` });
-  }
-  res.status(200).json(`User deleted successfully`);
-});
+// //delete user
+// app.delete("/user/:id", async (req, res) => {
+//   const { id: userId } = req.params;
+//   const user = await User.destroy({ where: { id: userId } });
+//   if (!user) {
+//     res.json({ msg: `No user with id: ${userId}` });
+//   }
+//   res.status(200).json(`User deleted successfully`);
+// });
 
 //get all departments
 app.get("/department", async (req, res) => {
@@ -139,118 +122,118 @@ app.post("/department", async (req, res) => {
   res.status(200).json(department);
 });
 
-app.get("/attendance/:id", async (req, res) => {
-  const { id: userId } = req.params;
-  const user = await User.findOne({
-    // include: "attendance_list",
-    where: { id: userId },
-  });
-  if (!user) {
-    res.json(`No user with id: ${userId}`);
-  }
-  // console.log(user instanceof User);
+// app.get("/attendance/:id", async (req, res) => {
+//   const { id: userId } = req.params;
+//   const user = await User.findOne({
+//     // include: "attendance_list",
+//     where: { id: userId },
+//   });
+//   if (!user) {
+//     res.json(`No user with id: ${userId}`);
+//   }
+//   // console.log(user instanceof User);
 
-  // console.log(user.id);
-  const attendance = await user.getAttendances({
-    attributes: {
-      include: [
-        [
-          sequelize.fn(
-            "date_part",
-            "hour",
-            sequelize.literal("(clock_out_time - clock_in_time)")
-          ),
-          "hour",
-        ],
-        [
-          sequelize.fn(
-            "date_part",
-            "min",
-            sequelize.literal("(clock_out_time - clock_in_time)")
-          ),
-          "min",
-        ],
-        // [sequelize.literal("(hour)"), "difference"],
-        // [sequelize.literal("(clock_out_time - clock_in_time)"), "score"],
-      ],
-    },
-  });
+//   // console.log(user.id);
+//   const attendance = await user.getAttendances({
+//     attributes: {
+//       include: [
+//         [
+//           sequelize.fn(
+//             "date_part",
+//             "hour",
+//             sequelize.literal("(clock_out_time - clock_in_time)")
+//           ),
+//           "hour",
+//         ],
+//         [
+//           sequelize.fn(
+//             "date_part",
+//             "min",
+//             sequelize.literal("(clock_out_time - clock_in_time)")
+//           ),
+//           "min",
+//         ],
+//         // [sequelize.literal("(hour)"), "difference"],
+//         // [sequelize.literal("(clock_out_time - clock_in_time)"), "score"],
+//       ],
+//     },
+//   });
 
-  attendance.forEach((attendance) => {
-    console.log(`${attendance.dataValues.hour}:${attendance.dataValues.min}`);
-  });
+//   attendance.forEach((attendance) => {
+//     console.log(`${attendance.dataValues.hour}:${attendance.dataValues.min}`);
+//   });
 
-  res.status(200).json({ attendance, no: attendance.length });
+//   res.status(200).json({ attendance, no: attendance.length });
 
-  // const attendance = await Attendance.findAll({
-  //   attributes: {
-  //     include: [
-  //       [
-  //         sequelize.fn(
-  //           "date_part",
-  //           "hour",
-  //           sequelize.literal("(clock_out_time - clock_in_time)")
-  //         ),
-  //         "hour",
-  //       ],
-  //       [
-  //         sequelize.fn(
-  //           "date_part",
-  //           "min",
-  //           sequelize.literal("(clock_out_time - clock_in_time)")
-  //         ),
-  //         "min",
-  //       ],
-  //       // [sequelize.literal("(hour)"), "difference"],
-  //       // [sequelize.literal("(clock_out_time - clock_in_time)"), "score"],
-  //     ],
-  //   },
-  //   where: {
-  //     user_id: user.id,
-  //   },
-  // });
-  // // const hour = await sequelize.query(
-  // //   `SELECT DATE_PART('hour',${attendance.clock_in_time}) FROM attendance;`
-  // // );
-  // // hour.forEach(async (element) => {
-  // //   console.log(element);
-  // // });
-  // // console.log(attendance);
-  // attendance.forEach((attendance) => {
-  //   console.log(`${attendance.dataValues.hour}:${attendance.dataValues.min}`);
-  // });
-  // res.json(attendance);
+//   // const attendance = await Attendance.findAll({
+//   //   attributes: {
+//   //     include: [
+//   //       [
+//   //         sequelize.fn(
+//   //           "date_part",
+//   //           "hour",
+//   //           sequelize.literal("(clock_out_time - clock_in_time)")
+//   //         ),
+//   //         "hour",
+//   //       ],
+//   //       [
+//   //         sequelize.fn(
+//   //           "date_part",
+//   //           "min",
+//   //           sequelize.literal("(clock_out_time - clock_in_time)")
+//   //         ),
+//   //         "min",
+//   //       ],
+//   //       // [sequelize.literal("(hour)"), "difference"],
+//   //       // [sequelize.literal("(clock_out_time - clock_in_time)"), "score"],
+//   //     ],
+//   //   },
+//   //   where: {
+//   //     user_id: user.id,
+//   //   },
+//   // });
+//   // // const hour = await sequelize.query(
+//   // //   `SELECT DATE_PART('hour',${attendance.clock_in_time}) FROM attendance;`
+//   // // );
+//   // // hour.forEach(async (element) => {
+//   // //   console.log(element);
+//   // // });
+//   // // console.log(attendance);
+//   // attendance.forEach((attendance) => {
+//   //   console.log(`${attendance.dataValues.hour}:${attendance.dataValues.min}`);
+//   // });
+//   // res.json(attendance);
 
-  // res.json(attendance);
-  // const attendance = await user.getattendance_list();
-  // res.json(attendance);
-  // const attendance = await Attendance.findAll({ where: { user_id: user.id } });
-  // // console.log(attendance);
-  // if (!attendance.length > 0) {
-  //   res.json(`No attendance for user:${user.username}`);
-  // }
+//   // res.json(attendance);
+//   // const attendance = await user.getattendance_list();
+//   // res.json(attendance);
+//   // const attendance = await Attendance.findAll({ where: { user_id: user.id } });
+//   // // console.log(attendance);
+//   // if (!attendance.length > 0) {
+//   //   res.json(`No attendance for user:${user.username}`);
+//   // }
 
-  // let dateHours = [];
-  // attendance.forEach((attendance) => {
-  //   let obj = {};
-  //   obj.date = attendance.date;
-  //   if (!attendance.clock_out_time) {
-  //     obj.msg = "No clockout time yet";
-  //     dateHours.push(obj);
-  //     return;
-  //   }
-  //   const differenceValue =
-  //     attendance.clock_out_time - attendance.clock_in_time;
+//   // let dateHours = [];
+//   // attendance.forEach((attendance) => {
+//   //   let obj = {};
+//   //   obj.date = attendance.date;
+//   //   if (!attendance.clock_out_time) {
+//   //     obj.msg = "No clockout time yet";
+//   //     dateHours.push(obj);
+//   //     return;
+//   //   }
+//   //   const differenceValue =
+//   //     attendance.clock_out_time - attendance.clock_in_time;
 
-  //   obj.hours = parseInt((Math.abs(differenceValue) / (1000 * 60 * 60)) % 24);
-  //   obj.min = parseInt((Math.abs(differenceValue) / (1000 * 60)) % 60);
-  //   dateHours.push(obj);
-  // });
-  // console.log(dateHours);
-  // res
-  //   .status(200)
-  //   .json({ attendance, num: attendance.length, differenceOnDates: dateHours });
-});
+//   //   obj.hours = parseInt((Math.abs(differenceValue) / (1000 * 60 * 60)) % 24);
+//   //   obj.min = parseInt((Math.abs(differenceValue) / (1000 * 60)) % 60);
+//   //   dateHours.push(obj);
+//   // });
+//   // console.log(dateHours);
+//   // res
+//   //   .status(200)
+//   //   .json({ attendance, num: attendance.length, differenceOnDates: dateHours });
+// });
 
 app.post("/attendance/:id", async (req, res) => {
   const { id: userId } = req.params;
