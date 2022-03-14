@@ -1,6 +1,8 @@
 const express = require("express");
 require("express-async-errors");
 const app = express();
+const passport = require("passport");
+const cors = require("cors");
 const errorHandler = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
 const {
@@ -13,18 +15,28 @@ const {
   Project_User,
 } = require("./database/models");
 
-const { userRoute, userDetailRoute } = require("./routes");
+const { userRoute, userDetailRoute, attendanceRoute } = require("./routes");
 
-const asyncWrapper = require("./utils/asyn-wrapper");
+const asyncWrapper = require("./utils/asynWrapper");
+
+require("./config/passport")(passport);
+
+app.use(passport.initialize());
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 // console.log(route);
 app.use("/api/user", userRoute);
 app.use("/api/userdetail", userDetailRoute);
+app.use("/api/attendance", attendanceRoute);
 
 app.get("/", (req, res) => {
-  res.send("Ehllo");
+  res.send(
+    '<h1>Home</h1><p>Please <a href="/api/user/register">register</a></p>'
+  );
 });
 
 //get user with id
@@ -244,7 +256,7 @@ app.post("/attendance/:id", async (req, res) => {
   const { id: userId } = req.params;
   const user = await User.findOne({ where: { id: userId } });
   if (!user) {
-    res.json(`No user with id: ${userId}`);
+    return res.json(`No user with id: ${userId}`);
   }
 
   const { date, day_type, clock_in_time, clock_out_time } = req.body;

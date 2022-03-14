@@ -33,10 +33,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(50),
         validate: {
           notEmpty: true,
+          is: {
+            args: /^\S*$/,
+            msg: "Username cannot contain space between text",
+          },
         },
-        // set(value) {
-        //   this.setDataValue("name", value.trim());
-        // },
+        set(value) {
+          this.setDataValue("username", value.trim().toLowerCase());
+          // this.setDataValue("username", value.toLowerCase());
+        },
+        get() {
+          const rawValue = this.getDataValue("username");
+          return rawValue.toLowerCase();
+        },
       },
       password: {
         type: DataTypes.STRING(50),
