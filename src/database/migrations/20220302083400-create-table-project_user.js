@@ -11,15 +11,16 @@ module.exports = {
 
     await queryInterface.createTable("project_user", {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("uuid_generate_v4()"),
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
       user_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       project_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
     });
@@ -47,11 +48,11 @@ module.exports = {
       onUpdate: "cascade",
     });
 
-    await queryInterface.addConstraint("project_user", {
-      fields: ["user_id", "project_id"],
-      type: "primary key",
-      name: "id",
-    });
+    // await queryInterface.addConstraint("project_user", {
+    //   fields: ["user_id", "project_id"],
+    //   type: "primary key",
+    //   name: "id",
+    // });
   },
 
   async down(queryInterface, Sequelize) {

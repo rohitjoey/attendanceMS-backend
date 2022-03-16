@@ -10,9 +10,9 @@ module.exports = {
      */
     await queryInterface.createTable("user_detail", {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("uuid_generate_v4()"),
+        type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       firstName: {
         type: Sequelize.STRING(50),
@@ -56,12 +56,12 @@ module.exports = {
         },
       },
       user_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
       },
       department_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
       },
     });
     await queryInterface.addConstraint("user_detail", {

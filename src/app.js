@@ -3,6 +3,7 @@ require("express-async-errors");
 const app = express();
 const passport = require("passport");
 const cors = require("cors");
+const path = require("path");
 const errorHandler = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
 const {
@@ -14,6 +15,7 @@ const {
   Project,
   Project_User,
 } = require("./database/models");
+app.use(cors());
 
 const { userRoute, userDetailRoute, attendanceRoute } = require("./routes");
 
@@ -26,17 +28,16 @@ app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+// app.set("view engine", "ejs");
+// app.set("views", path.join(__dirname, "..", "views"));
 
 // console.log(route);
 app.use("/api/user", userRoute);
 app.use("/api/userdetail", userDetailRoute);
-app.use("/api/attendance", attendanceRoute);
+app.use("/api/user/attendance", attendanceRoute);
 
 app.get("/", (req, res) => {
-  res.send(
-    '<h1>Home</h1><p>Please <a href="/api/user/register">register</a></p>'
-  );
+  res.send("Hello");
 });
 
 // // //get userdetails of an user_id
@@ -297,7 +298,7 @@ app.get("/test", async (req, res) => {
 app.use(errorHandler);
 app.use(notFound);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {

@@ -10,21 +10,23 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   const { username, password } = req.body;
+  console.log(req.body);
   const hashedPassword = await generatePassword(password);
   const user = await User.create({
     username: username,
     password: hashedPassword,
   });
   const tokenObject = generateJWT(user);
-  req.locals.tokenObject = tokenObject;
-  // res.status(200).json({
-  //   success: true,
-  //   user: user,
-  //   token: tokenObject.token,
-  //   expiresIn: tokenObject.expiresIn,
-  // });
+  // req.locals.tokenObject = tokenObject;
+  res.status(200).json({
+    success: true,
+    user: user,
+    token: tokenObject.token,
+    expiresIn: tokenObject.expiresIn,
+  });
   // console.log(req);
-  res.redirect("/api/user/login");
+  // const token = JSON.stringify(tokenObject);
+  // res.status(200).render("pages/attendance", { tokenObject: token });
 };
 
 const loginUser = async (req, res) => {
@@ -32,25 +34,24 @@ const loginUser = async (req, res) => {
   const name = username.trim().toLowerCase();
   const user = await User.findOne({ where: { username: name } });
   if (!user) {
-    return res.status(401).json("Cannot find user");
+    return res.status(401).json({ msg: "Cannot find user" });
   }
   const isValid = await validatePassword(password, user.password);
   if (!isValid) {
-    return res.status(400).json("Wrong password");
+    return res.status(400).json({ msg: "Wrong password" });
   }
 
   // res.status(400).json("Welcome");
 
   const tokenObject = generateJWT(user);
-  // res.status(200).json({
-  //   success: true,
-  //   user: user,
-  //   token: tokenObject.token,
-  //   expiresIn: tokenObject.expiresIn,
-  // });
-
-  req.locals.tokenObject = tokenObject;
-  res.redirect("/api/attendance");
+  res.status(200).json({
+    success: true,
+    user: user,
+    token: tokenObject.token,
+    expiresIn: tokenObject.expiresIn,
+  });
+  // const token = JSON.stringify(tokenObject);
+  // res.status(200).render("pages/attendance", { tokenObject: token });
 };
 
 // const getUser = async (req, res) => {

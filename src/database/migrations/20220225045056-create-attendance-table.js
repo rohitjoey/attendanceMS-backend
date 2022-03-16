@@ -11,9 +11,9 @@ module.exports = {
 
     await queryInterface.createTable("attendance", {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("uuid_generate_v4()"),
+        type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       date: {
         type: Sequelize.DATEONLY,
@@ -33,7 +33,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
       user_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
     });

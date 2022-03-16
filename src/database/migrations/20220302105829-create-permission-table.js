@@ -10,10 +10,9 @@ module.exports = {
      */
     await queryInterface.createTable("permission", {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("uuid_generate_v4()"),
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false,
+        autoIncrement: true,
       },
       title: {
         type: Sequelize.STRING(25),

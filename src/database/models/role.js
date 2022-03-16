@@ -17,10 +17,9 @@ module.exports = (sequelize, DataTypes) => {
   Role.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
+        autoIncrement: true,
       },
       title: {
         type: DataTypes.STRING(25),
@@ -34,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       user_id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
       },

@@ -16,10 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   Department.init(
     {
       id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        autoIncrement: true,
       },
       name: {
         type: DataTypes.STRING(50),

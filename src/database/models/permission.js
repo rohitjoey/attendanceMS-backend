@@ -12,10 +12,9 @@ module.exports = (sequelize, DataTypes) => {
   Permission.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
+        autoIncrement: true,
       },
       title: {
         type: DataTypes.STRING(25),

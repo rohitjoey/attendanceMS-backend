@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/authHeader'); %>
+  </head>
+  <body class="container">
+    <main>
+      <div class="jumbotron">
+        <h1>Attendance Page</h1>
+        <form action="/" onsubmit="requestFunction()">
+          <input type="submit" value="Clock in" />
+        </form>
+        <form action="/clock_out" onsubmit="requestFunction()">
+          <input type="submit" value="Clock out" />
+        </form>
+      </div>
+    </main>
+
+    <script></script>
+  </body>
+</html>

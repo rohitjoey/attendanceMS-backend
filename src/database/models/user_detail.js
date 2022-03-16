@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Model attributes are defined here
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       first_name: {
         type: DataTypes.STRING(50),
@@ -66,12 +66,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       user_id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
       },
       department_id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
       },
     },
     {

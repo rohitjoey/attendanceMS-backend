@@ -10,15 +10,16 @@ module.exports = {
      */
     await queryInterface.createTable("role_permission", {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("uuid_generate_v4()"),
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
       role_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       permission_id: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
     });
@@ -46,11 +47,11 @@ module.exports = {
       onUpdate: "cascade",
     });
 
-    await queryInterface.addConstraint("role_permission", {
-      fields: ["role_id", "permission_id"],
-      type: "primary key",
-      name: "id",
-    });
+    // await queryInterface.addConstraint("role_permission", {
+    //   fields: ["role_id", "permission_id"],
+    //   type: "primary key",
+    //   name: "id",
+    // });
   },
 
   async down(queryInterface, Sequelize) {

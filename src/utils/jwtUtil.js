@@ -17,7 +17,7 @@ const generateJWT = (user) => {
 
   //   console.log(payload);
 
-  const token = jsonwebtoken.sign(payload, PRIV_KEY, {
+  let token = jsonwebtoken.sign(payload, PRIV_KEY, {
     expiresIn: expiresIn,
     algorithm: "RS256",
   });

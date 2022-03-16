@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
   Attendance.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       date: {
         type: DataTypes.DATEONLY,
