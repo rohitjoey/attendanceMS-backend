@@ -69,7 +69,11 @@ const clockOut = async (req, res) => {
 
   // console.log(userId);
   // console.log(req.params);
-  const attendanceId = await Attendance.max("id");
+  const attendanceId = await Attendance.max("id", {
+    where: {
+      user_id: userId,
+    },
+  });
   // console.log(attendanceId);
   // const { id: attendanceId } = req.params;
   const { clock_out_time } = req.body;

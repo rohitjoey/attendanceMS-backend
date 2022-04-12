@@ -17,7 +17,7 @@ module.exports = (router) => {
     clockIn
   );
   router.patch(
-    "/clockout/:id",
+    "/clockout",
     passport.authenticate("jwt", { session: false }),
     clockOut
   );
