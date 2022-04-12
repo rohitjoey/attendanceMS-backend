@@ -44,7 +44,7 @@ const getAttendances = async (req, res) => {
 const clockIn = async (req, res) => {
   const user = req.user;
   const { id: userId } = user.toJSON();
-  console.log(new Date());
+  // console.log(new Date());
 
   const { date, day_type, clock_in_time, clock_out_time } = req.body;
 
@@ -68,7 +68,10 @@ const clockOut = async (req, res) => {
   // console.log(new Date());
 
   // console.log(userId);
-  const { id: attendanceId } = req.params;
+  // console.log(req.params);
+  const attendanceId = await Attendance.max("id");
+  // console.log(attendanceId);
+  // const { id: attendanceId } = req.params;
   const { clock_out_time } = req.body;
 
   const aId = await Attendance.findOne({
