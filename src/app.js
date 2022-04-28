@@ -17,7 +17,12 @@ const {
 } = require("./database/models");
 app.use(cors());
 
-const { userRoute, userDetailRoute, attendanceRoute } = require("./routes");
+const {
+  userRoute,
+  userDetailRoute,
+  attendanceRoute,
+  roleRoute,
+} = require("./routes");
 
 const asyncWrapper = require("./utils/asynWrapper");
 
@@ -35,6 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/user", userRoute);
 app.use("/api/userdetail", userDetailRoute);
 app.use("/api/user/attendance", attendanceRoute);
+app.use("/api/role", roleRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello");

@@ -1,8 +1,20 @@
 const { User_detail } = require("../database/models");
 
-const getAllUserDetail = async (req, res) => {
-  const userDetail = await User_detail.findAll();
-  res.json(userDetail);
+const getUserDetail = async (req, res) => {
+  const user = req.user;
+  console.log(user.toJSON());
+  const userDetail = await user.getUser_detail();
+  res.status(200).json({ userDetail });
 };
 
-module.exports = { getAllUserDetail };
+const createUserDetail = async (req, res) => {
+  const detailObject = req.body;
+  console.log(detailObject);
+  const userDetail = await User_detail.create(detailObject);
+  res.status(200).json({
+    success: true,
+    userDetail: userDetail,
+  });
+};
+
+module.exports = { getUserDetail, createUserDetail };

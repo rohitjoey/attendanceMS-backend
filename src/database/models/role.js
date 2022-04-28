@@ -4,7 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
     static associate({ User, Permission, Role_Permission }) {
       this.belongsTo(User, {
-        foreignKey: { name: "role_id", type: DataTypes.UUID, allowNull: false },
+        foreignKey: {
+          name: "user_id",
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
       });
 
       this.belongsToMany(Permission, {

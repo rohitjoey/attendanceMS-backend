@@ -5,6 +5,7 @@ const getAttendances = async (req, res) => {
   // console.log(req.locals.tokenObject);
   // console.log(req.isAuthenticated());
   const user = req.user;
+  console.log(user.toJSON());
   // if (!user) {
   //   console / log("herer");
   // }
