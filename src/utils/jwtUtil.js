@@ -12,6 +12,7 @@ const generateJWT = (user) => {
 
   const payload = {
     sub: userId,
+    admin: user.admin,
     iat: Date.now(),
   };
 

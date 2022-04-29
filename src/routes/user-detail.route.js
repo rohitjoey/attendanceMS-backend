@@ -11,7 +11,11 @@ module.exports = (router) => {
   //   console.log("userdetail", router);
   router
     .route("/")
-    .get(passport.authenticate("jwt", { session: false }), getUserDetail)
+    .get(
+      passport.authenticate("jwt", { session: false }),
+
+      getUserDetail
+    )
     .post(createUserDetail);
   // router.post("/", createUserDetail);
   //   console.log("fffuserdetail", router);

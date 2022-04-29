@@ -1,17 +1,18 @@
 const passport = require("passport");
 const {
-  getRole,
-  createRole,
-  getRoleByUserId,
-} = require("../controllers/role.controller");
+  getDepartment,
+  createDepartment,
+  getDepartmentByUserId,
+} = require("../controllers/department.controller");
+
 const { adminAuth } = require("../middlewares/admin-auth-route");
 
 module.exports = (router) => {
-  router.route("/").get(getRole).post(adminAuth, createRole);
+  router.route("/").get(getDepartment).post(adminAuth, createDepartment);
   router.get(
     "/:id",
     passport.authenticate("jwt", { session: false }),
-    getRoleByUserId
+    getDepartmentByUserId
   );
   return router;
 };

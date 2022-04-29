@@ -32,6 +32,7 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { username, password } = req.body;
   const name = username.trim().toLowerCase();
+
   const user = await User.findOne({ where: { username: name } });
   if (!user) {
     return res.status(401).json({ msg: "Cannot find user" });
@@ -41,12 +42,19 @@ const loginUser = async (req, res) => {
     return res.status(400).json({ msg: "Wrong password" });
   }
 
+  if (user.username === "admin") {
+    user.admin = true;
+  } else {
+    user.admin = false;
+  }
+
   // res.status(400).json("Welcome");
 
   const tokenObject = generateJWT(user);
   res.status(200).json({
     success: true,
     user: user,
+    admin: user.admin,
     token: tokenObject.token,
     expiresIn: tokenObject.expiresIn,
   });

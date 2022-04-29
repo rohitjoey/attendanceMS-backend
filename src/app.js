@@ -22,6 +22,7 @@ const {
   userDetailRoute,
   attendanceRoute,
   roleRoute,
+  departmentRoute,
 } = require("./routes");
 
 const asyncWrapper = require("./utils/asynWrapper");
@@ -41,6 +42,7 @@ app.use("/api/user", userRoute);
 app.use("/api/userdetail", userDetailRoute);
 app.use("/api/user/attendance", attendanceRoute);
 app.use("/api/role", roleRoute);
+app.use("/api/department", departmentRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello");

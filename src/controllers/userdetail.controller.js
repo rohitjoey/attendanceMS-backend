@@ -2,7 +2,7 @@ const { User_detail } = require("../database/models");
 
 const getUserDetail = async (req, res) => {
   const user = req.user;
-  // console.log(user.toJSON());
+  console.log(user.toJSON());
   const userDetail = await user.getUser_detail();
   res.status(200).json({ userDetail });
 };
