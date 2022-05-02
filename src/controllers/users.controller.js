@@ -5,7 +5,7 @@ const passport = require("passport");
 
 const getAllUsers = async (req, res) => {
   const users = await User.findAll();
-  res.json(users);
+  res.json({ success: true, users });
 };
 
 const createUser = async (req, res) => {

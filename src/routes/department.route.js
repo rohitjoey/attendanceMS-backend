@@ -8,7 +8,18 @@ const {
 const { adminAuth } = require("../middlewares/admin-auth-route");
 
 module.exports = (router) => {
-  router.route("/").get(getDepartment).post(adminAuth, createDepartment);
+  router
+    .route("/")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      adminAuth,
+      getDepartment
+    )
+    .post(
+      passport.authenticate("jwt", { session: false }),
+      adminAuth,
+      createDepartment
+    );
   router.get(
     "/:id",
     passport.authenticate("jwt", { session: false }),

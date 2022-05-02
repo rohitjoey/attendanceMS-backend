@@ -1,5 +1,5 @@
 const { sequelize } = require("../database/models");
-const { Attendance } = require("../database/models");
+const { Attendance, User } = require("../database/models");
 
 const getAttendances = async (req, res) => {
   // console.log(req.locals.tokenObject);
@@ -33,6 +33,10 @@ const getAttendances = async (req, res) => {
         // [sequelize.literal("(clock_out_time - clock_in_time)"), "score"],
       ],
     },
+    // include: {
+    //   model: User,
+    //   attributes: ["username"],
+    // },
   });
 
   //   attendance.forEach((attendance) => {

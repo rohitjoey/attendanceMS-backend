@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
             args: /^\S*$/,
             msg: "Username cannot contain space between text",
           },
+          is: {
+            args: /^[A-Za-z0-9_@]+$/,
+            msg: "Username shouldnot contain special character",
+          },
+        },
+        unique: {
+          args: true,
+          msg: "Username already exists",
         },
         set(value) {
           this.setDataValue("username", value.trim().toLowerCase());

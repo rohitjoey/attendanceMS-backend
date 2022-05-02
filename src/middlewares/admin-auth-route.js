@@ -6,7 +6,9 @@ const adminAuth = async (req, res, next) => {
   if (name === "admin") {
     next();
   } else {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res
+      .status(401)
+      .json({ success: "false", message: "Unauthorized, Not Admin" });
   }
   //   const userDetail = await user.getUser_detail();
   //   next();

@@ -8,9 +8,16 @@ const {
   protectedRoute,
 } = require("../controllers/users.controller");
 
+const { adminAuth } = require("../middlewares/admin-auth-route");
+
 module.exports = (router) => {
   // console.log("initial router of user", router);
-  router.get("/", getAllUsers);
+  router.get(
+    "/",
+    passport.authenticate("jwt", { session: false }),
+    adminAuth,
+    getAllUsers
+  );
   router.post("/register", createUser);
   router
     .route("/protected")
