@@ -2,15 +2,25 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class User_detail extends Model {
-    static associate({ User, Department }) {
+    static associate({ User, Department, Role }) {
       // define association here
       this.belongsTo(User, {
-        foreignKey: { name: "user_id", type: DataTypes.UUID, allowNull: false },
+        foreignKey: {
+          name: "user_id",
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
       });
       this.belongsTo(Department, {
         foreignKey: {
           name: "department_id",
-          type: DataTypes.UUID,
+          type: DataTypes.INTEGER,
+        },
+      });
+      this.belongsTo(Role, {
+        foreignKey: {
+          name: "role_id",
+          type: DataTypes.INTEGER,
         },
       });
     }
@@ -75,6 +85,9 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       department_id: {
+        type: DataTypes.INTEGER,
+      },
+      role_id: {
         type: DataTypes.INTEGER,
       },
     },

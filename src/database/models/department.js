@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "users",
         foreignKey: {
           name: "department_id",
-          type: DataTypes.UUID,
+          type: DataTypes.INTEGER,
         },
       });
     }

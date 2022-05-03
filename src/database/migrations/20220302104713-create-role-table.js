@@ -25,22 +25,6 @@ module.exports = {
         type: Sequelize.STRING(8),
         allowNull: false,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-      },
-    });
-    await queryInterface.addConstraint("role", {
-      fields: ["user_id"],
-      type: "foreign key",
-      name: "role_id",
-      references: {
-        table: "users",
-        field: "id",
-      },
-      onDelete: "cascade",
-      onUpdate: "cascade",
     });
   },
 

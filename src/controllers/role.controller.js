@@ -21,7 +21,7 @@ const getRoleByUserId = async (req, res) => {
   }
 };
 
-const createRole = async (req, res) => {
+const assignRole = async (req, res) => {
   const { title, role_code, user_id } = req.body;
 
   await Role.create({
@@ -35,4 +35,4 @@ const createRole = async (req, res) => {
   });
 };
 
-module.exports = { getRole, createRole, getRoleByUserId };
+module.exports = { getRole, assignRole, getRoleByUserId };

@@ -2,12 +2,12 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
-    static associate({ User, Permission, Role_Permission }) {
-      this.belongsTo(User, {
+    static associate({ User_detail, Permission, Role_Permission }) {
+      this.hasMany(User_detail, {
+        as: "users",
         foreignKey: {
-          name: "user_id",
-          type: DataTypes.UUID,
-          allowNull: false,
+          name: "role_id",
+          type: DataTypes.INTEGER,
         },
       });
 
@@ -35,11 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       role_code: {
         type: DataTypes.STRING(8),
         allowNull: false,
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
       },
     },
     {

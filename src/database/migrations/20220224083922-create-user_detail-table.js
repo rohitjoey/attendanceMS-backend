@@ -63,6 +63,9 @@ module.exports = {
       department_id: {
         type: Sequelize.INTEGER,
       },
+      role_id: {
+        type: Sequelize.INTEGER,
+      },
     });
     await queryInterface.addConstraint("user_detail", {
       fields: ["gender"],
@@ -89,6 +92,18 @@ module.exports = {
       name: "department_id",
       references: {
         table: "department",
+        field: "id",
+      },
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    });
+
+    await queryInterface.addConstraint("user_detail", {
+      fields: ["role_id"],
+      type: "foreign key",
+      name: "role_id",
+      references: {
+        table: "role",
         field: "id",
       },
       onDelete: "cascade",

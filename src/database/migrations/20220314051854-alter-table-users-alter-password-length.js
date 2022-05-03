@@ -13,11 +13,11 @@ module.exports = {
       type: Sequelize.STRING,
     });
 
-    await queryInterface.addConstraint("users", {
-      fields: ["username"],
-      type: "unique",
-      name: "unique_constraint_username",
-    });
+    // await queryInterface.addConstraint("users", {
+    //   fields: ["username"],
+    //   type: "unique",
+    //   name: "unique_constraint_username",
+    // });
   },
 
   async down(queryInterface, Sequelize) {

@@ -12,17 +12,23 @@ module.exports = {
      * }], {});
      */
     await queryInterface.bulkInsert(
-      "user_detail",
+      "department",
       [
         {
-          first_name: "nirjala",
-          last_name: "shrestha",
-          gender: "female",
-          dob: "1999-2-2",
-          contact: "984654261",
-          address: "sll",
-          email: "nir@gmail.com",
-          user_id: "aa8c407a-4e59-4973-acdb-f2168d25ed3a",
+          name: "Engineering",
+          hod: "Sahas",
+        },
+        {
+          name: "Administration",
+          hod: "Nirjal",
+        },
+        {
+          name: "Finance",
+          hod: "Nirajan",
+        },
+        {
+          name: "Management",
+          hod: "Hari",
         },
       ],
       {}
@@ -36,6 +42,5 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("user_detail", null, {});
   },
 };

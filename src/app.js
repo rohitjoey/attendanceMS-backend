@@ -13,6 +13,7 @@ const {
   Department,
   Attendance,
   Project,
+  Role,
   Project_User,
 } = require("./database/models");
 app.use(cors());
@@ -43,6 +44,15 @@ app.use("/api/userdetail", userDetailRoute);
 app.use("/api/user/attendance", attendanceRoute);
 app.use("/api/role", roleRoute);
 app.use("/api/department", departmentRoute);
+
+// app.use("/test", async (req, res) => {
+//   const role = await Role.create({
+//     title: "asdf",
+//     role_code: "sf",
+//     user_id: "102",
+//   });
+//   res.json(role);
+// });
 
 app.get("/", (req, res) => {
   res.send("Hello");

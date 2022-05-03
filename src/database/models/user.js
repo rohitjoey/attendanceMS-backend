@@ -6,9 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(User_detail, {
         foreignKey: { name: "user_id", type: DataTypes.UUID, allowNull: false },
       });
-      this.hasOne(Role, {
-        foreignKey: { name: "user_id", type: DataTypes.UUID, allowNull: false },
-      });
+
       this.hasMany(Attendance, {
         // as: "attendance_list",
         foreignKey: { name: "user_id", type: DataTypes.UUID, allowNull: false },
