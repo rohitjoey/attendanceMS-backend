@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
     static associate({ User_detail, Permission, Role_Permission }) {
       this.hasMany(User_detail, {
-        as: "users",
         foreignKey: {
           name: "role_id",
           type: DataTypes.INTEGER,

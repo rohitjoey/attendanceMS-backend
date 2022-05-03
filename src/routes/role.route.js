@@ -1,7 +1,7 @@
 const passport = require("passport");
 const {
   getRole,
-
+  createRole,
   getRoleByUserId,
   assignRole,
 } = require("../controllers/role.controller");
@@ -14,8 +14,10 @@ module.exports = (router) => {
     .post(
       passport.authenticate("jwt", { session: false }),
       adminAuth,
-      assignRole
+      createRole
     );
+
+  router.post("/assign", assignRole);
 
   router.get(
     "/:id",
