@@ -38,13 +38,20 @@ const createRole = async (req, res) => {
 
 const assignRole = async (req, res) => {
   const { userId, assignedId } = req.body;
+  console.log(userId, assignedId);
 
   const user = await User_detail.findOne({ where: { user_id: userId } });
+  // console.log(user);
+  if (!user) {
+    return res.json({ status: "No user found" });
+  }
   const role = await Role.findOne({ where: { id: assignedId } });
-
-  // console.log(user, role);
+  if (!role) {
+    return res.json({ status: "No role found" });
+  }
   await role.addUser_detail(user);
-  res.json({ success: "true" });
+  // console.log(user, role);
+  res.json({ status: "Success" });
 };
 
 module.exports = { getRole, assignRole, createRole, getRoleByUserId };
