@@ -6,54 +6,49 @@ module.exports = {
      * Add seed commands here.
      *
      * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
      */
-
     await queryInterface.bulkInsert(
-      "role",
+      "permission",
       [
         {
-          title: "engineer",
+          title: "viewAllUsers",
           description: "",
-          role_code: "er",
+          permission_code: "vall",
         },
         {
-          title: "senior engineer",
+          title: "viewUsers",
           description: "",
-          role_code: "srer",
+          permission_code: "vu",
         },
         {
-          title: "intern",
+          title: "assignRole",
           description: "",
-          role_code: "in",
+          permission_code: "ar",
         },
         {
-          title: "admin officer",
+          title: "assignDepartment",
           description: "",
-          role_code: "adof",
+          permission_code: "ad",
         },
         {
-          title: "trainee",
+          title: "createRole",
           description: "",
-          role_code: "tr",
+          permission_code: "cr",
         },
         {
-          title: "finance officer",
+          title: "deleteRole",
           description: "",
-          role_code: "fnof",
+          permission_code: "dr",
         },
         {
-          title: "finance head",
+          title: "deleteDepartment",
           description: "",
-          role_code: "fnhd",
+          permission_code: "dd",
         },
         {
-          title: "admin head",
+          title: "createDepartment",
           description: "",
-          role_code: "anhd",
+          permission_code: "cd",
         },
       ],
       {}
@@ -66,6 +61,6 @@ module.exports = {
      *
      * Example:
      */
-    await queryInterface.bulkDelete("role", null, {});
+    await queryInterface.bulkDelete("People", null, {});
   },
 };

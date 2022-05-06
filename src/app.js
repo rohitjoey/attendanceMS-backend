@@ -6,6 +6,7 @@ const cors = require("cors");
 const path = require("path");
 const errorHandler = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
+const { Op } = require("sequelize");
 const {
   sequelize,
   User,
@@ -15,7 +16,9 @@ const {
   Project,
   Role,
   Project_User,
+  Permission,
 } = require("./database/models");
+
 app.use(cors());
 
 const {
@@ -24,6 +27,7 @@ const {
   attendanceRoute,
   roleRoute,
   departmentRoute,
+  permissionRoute,
 } = require("./routes");
 
 const asyncWrapper = require("./utils/asynWrapper");
@@ -44,14 +48,10 @@ app.use("/api/userdetail", userDetailRoute);
 app.use("/api/user/attendance", attendanceRoute);
 app.use("/api/role", roleRoute);
 app.use("/api/department", departmentRoute);
+app.use("/api/permission", permissionRoute);
 
 // app.use("/test", async (req, res) => {
-//   const role = await Role.create({
-//     title: "asdf",
-//     role_code: "sf",
-//     user_id: "102",
-//   });
-//   res.json(role);
+
 // });
 
 app.get("/", (req, res) => {
@@ -294,24 +294,24 @@ app.get("/project-user", async (req, res) => {
   res.status(200).json(projectUsers);
 });
 
-app.get("/test", async (req, res) => {
-  const { user_id, project_id } = req.body;
-  const user = await User.findOne({ where: { id: user_id } });
-  if (!user) {
-    res.json(`No user with id: ${user_id}`);
-  }
+// app.get("/test", async (req, res) => {
+//   const { user_id, project_id } = req.body;
+//   const user = await User.findOne({ where: { id: user_id } });
+//   if (!user) {
+//     res.json(`No user with id: ${user_id}`);
+//   }
 
-  const project = await Project.findOne({ where: { id: project_id } });
-  if (!project) {
-    res.json(`No project with id: ${project_id}`);
-  }
+//   const project = await Project.findOne({ where: { id: project_id } });
+//   if (!project) {
+//     res.json(`No project with id: ${project_id}`);
+//   }
 
-  await project.addUser(user);
+//   await project.addUser(user);
 
-  // console.log(user.toJSON());
-  // console.log(project.toJSON());
-  res.json({ msg: "ok" });
-});
+//   // console.log(user.toJSON());
+//   // console.log(project.toJSON());
+//   res.json({ msg: "ok" });
+// });
 
 app.use(errorHandler);
 app.use(notFound);

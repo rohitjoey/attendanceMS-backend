@@ -12,12 +12,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
       this.belongsTo(Department, {
+        as: "department",
         foreignKey: {
           name: "department_id",
           type: DataTypes.INTEGER,
         },
       });
       this.belongsTo(Role, {
+        as: "role",
         foreignKey: {
           name: "role_id",
           type: DataTypes.INTEGER,

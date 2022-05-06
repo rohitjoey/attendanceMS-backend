@@ -38,7 +38,7 @@ const createRole = async (req, res) => {
 
 const assignRole = async (req, res) => {
   const { userId, assignedId } = req.body;
-  console.log(userId, assignedId);
+  // console.log(userId, assignedId);
 
   const user = await User_detail.findOne({ where: { user_id: userId } });
   // console.log(user);

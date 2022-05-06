@@ -1,11 +1,34 @@
-const { User } = require("../database/models");
+const { User, User_detail, sequelize } = require("../database/models");
 const { validatePassword, generatePassword } = require("../utils/passwordUtil");
 const { generateJWT } = require("../utils/jwtUtil");
 const passport = require("passport");
+const { checkPermission } = require("../utils/permissionCheck");
 
 const getAllUsers = async (req, res) => {
-  const users = await User.findAll();
+  // console.log("adsfasdfasdf", req.name);
+  // console.log("asdfad", req.permissions);
+
+  const { name, permissions, departmentId } = req;
+  // console.log(name, permissions, departmentId);
+  const hasPermission = checkPermission(permissions, "vu");
+  console.log(hasPermission);
+  let users;
+  if (name === "admin") {
+    users = await User.findAll({ attributes: { exclude: ["password"] } });
+  } else if (!hasPermission) {
+    return res.status(401).json({ msg: "The user has no permission" });
+  } else {
+    users = await sequelize.query(
+      `SELECT users.username,users.id FROM user_detail JOIN users ON user_detail.user_id=users.id WHERE user_detail.department_id=?`,
+      {
+        replacements: [`${departmentId}`],
+      }
+    );
+    // console.log(users);
+    // users = userssdf.getUser();
+  }
   res.json({ success: true, users });
+  // res.json("not admin");
 };
 
 const createUser = async (req, res) => {

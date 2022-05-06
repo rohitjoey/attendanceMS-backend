@@ -7,6 +7,7 @@ const userRoute = require("./users.route")(express.Router());
 const attendanceRoute = require("./attendance.route")(express.Router());
 const roleRoute = require("./role.route")(express.Router());
 const departmentRoute = require("./department.route")(express.Router());
+const permissionRoute = require("./permission.route")(express.Router());
 
 module.exports = {
   userRoute,
@@ -14,4 +15,5 @@ module.exports = {
   attendanceRoute,
   roleRoute,
   departmentRoute,
+  permissionRoute,
 };

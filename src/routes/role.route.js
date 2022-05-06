@@ -5,7 +5,7 @@ const {
   getRoleByUserId,
   assignRole,
 } = require("../controllers/role.controller");
-const { adminAuth } = require("../middlewares/admin-auth-route");
+const { adminAuth } = require("../middlewares/permission-auth-route");
 
 module.exports = (router) => {
   router

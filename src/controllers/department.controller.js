@@ -1,4 +1,4 @@
-const { Department } = require("../database/models/");
+const { Department, User_detail } = require("../database/models/");
 
 const getDepartment = async (req, res) => {
   const departments = await Department.findAll();
@@ -27,11 +27,38 @@ const getDepartmentByUserId = async (req, res) => {
   //   console.log(typeof user_id);
   //   console.log(typeof userId);
   if (userId === user_id) {
-    userDepartment = await user.getDepartment();
+    const userDetail = await user.getUser_detail();
+    const userDepartment = await Department.findOne({
+      where: { id: userDetail.department_id },
+    });
+
     res.status(200).json({ userDepartment });
   } else {
     res.status(500).json({ msg: "Requester id donot match" });
   }
 };
 
-module.exports = { getDepartment, createDepartment, getDepartmentByUserId };
+const assignDepartment = async (req, res) => {
+  const { userId, assignedId } = req.body;
+  // console.log(userId, assignedId);
+
+  const user = await User_detail.findOne({ where: { user_id: userId } });
+  // console.log(user);
+  if (!user) {
+    return res.json({ status: "No user found" });
+  }
+  const department = await Department.findOne({ where: { id: assignedId } });
+  if (!department) {
+    return res.json({ status: "No department found" });
+  }
+  await department.addUser_detail(user);
+  // console.log(user, department);
+  res.json({ status: "Success" });
+};
+
+module.exports = {
+  getDepartment,
+  createDepartment,
+  getDepartmentByUserId,
+  assignDepartment,
+};

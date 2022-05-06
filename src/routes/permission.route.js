@@ -1,10 +1,10 @@
 const passport = require("passport");
 const {
-  getDepartment,
-  createDepartment,
-  getDepartmentByUserId,
-  assignDepartment,
-} = require("../controllers/department.controller");
+  getPermission,
+  createPermission,
+  getPermissionByUserId,
+  assignPermission,
+} = require("../controllers/permission.controller");
 
 const { adminAuth } = require("../middlewares/permission-auth-route");
 
@@ -14,20 +14,25 @@ module.exports = (router) => {
     .get(
       passport.authenticate("jwt", { session: false }),
       adminAuth,
-      getDepartment
+      getPermission
     )
     .post(
       passport.authenticate("jwt", { session: false }),
       adminAuth,
-      createDepartment
+      createPermission
     );
-  router.get(
-    "/:id",
-    passport.authenticate("jwt", { session: false }),
-    getDepartmentByUserId
-  );
+  //   router.get(
+  //     "/:id",
+  //     passport.authenticate("jwt", { session: false }),
+  //     getPermissionByUserId
+  //   );
 
-  router.post("/assign", assignDepartment);
+  router.post(
+    "/assign",
+    passport.authenticate("jwt", { session: false }),
+    adminAuth,
+    assignPermission
+  );
 
   return router;
 };
