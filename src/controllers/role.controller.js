@@ -1,8 +1,36 @@
-const { Role, User_detail } = require("../database/models/");
+const { Role, User_detail, sequelize } = require("../database/models/");
+const { checkPermission } = require("../utils/permissionCheck");
+const { Op } = require("sequelize");
 
 const getRole = async (req, res) => {
-  const roles = await Role.findAll();
-  res.status(200).json(roles);
+  const { name, permissions, role } = req;
+  let role_code;
+  if (role.includes("er")) {
+    role_code = "er";
+  } else if (role.includes("fn")) {
+    role_code = "fn";
+  } else if (role.includes("ad")) {
+    role_code = "ad";
+  } else {
+    return res.status(500).json({ msg: "OH NO" });
+  }
+  const hasPermission = checkPermission(permissions, "gr");
+  let roles;
+  if (name === "admin") {
+    roles = await Role.findAll();
+  } else if (!hasPermission) {
+    return res.status(401).json({ msg: "The user has no permission" });
+  } else {
+    roles = await Role.findAll({
+      where: {
+        role_code: {
+          [Op.like]: `%${role_code}%`,
+        },
+      },
+    });
+  }
+  res.json({ success: true, roles });
+  // res.status(200).json(roles);
 };
 
 const getRoleByUserId = async (req, res) => {

@@ -1,8 +1,13 @@
 const { Department, User_detail } = require("../database/models/");
 
 const getDepartment = async (req, res) => {
+  const { name } = req;
+  // let department
+  if (name !== "admin") {
+    return res.status(401).json({ msg: "The user has no permission" });
+  }
   const departments = await Department.findAll();
-  res.status(200).json(departments);
+  res.json({ success: true, departments });
 };
 
 const createDepartment = async (req, res) => {

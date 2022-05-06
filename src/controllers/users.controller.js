@@ -11,7 +11,7 @@ const getAllUsers = async (req, res) => {
   const { name, permissions, departmentId } = req;
   // console.log(name, permissions, departmentId);
   const hasPermission = checkPermission(permissions, "vu");
-  console.log(hasPermission);
+  // console.log(hasPermission);
   let users;
   if (name === "admin") {
     users = await User.findAll({ attributes: { exclude: ["password"] } });
@@ -19,13 +19,12 @@ const getAllUsers = async (req, res) => {
     return res.status(401).json({ msg: "The user has no permission" });
   } else {
     users = await sequelize.query(
-      `SELECT users.username,users.id FROM user_detail JOIN users ON user_detail.user_id=users.id WHERE user_detail.department_id=?`,
+      `SELECT users.username,users.id,users.active,users.verified_at FROM user_detail JOIN users ON user_detail.user_id=users.id WHERE user_detail.department_id=?`,
       {
         replacements: [`${departmentId}`],
       }
     );
-    // console.log(users);
-    // users = userssdf.getUser();
+    users = users[0];
   }
   res.json({ success: true, users });
   // res.json("not admin");

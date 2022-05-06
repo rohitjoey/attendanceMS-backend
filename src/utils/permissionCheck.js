@@ -1,5 +1,5 @@
 const checkPermission = (permissionArray, neededPermission) => {
-  //   console.log(permissionArray);
+  // console.log(permissionArray);
   if (permissionArray.includes(neededPermission)) {
     return true;
   }

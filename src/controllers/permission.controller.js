@@ -40,6 +40,7 @@ const createPermission = async (req, res) => {
 
 const assignPermission = async (req, res) => {
   const { role_code, permission_code } = req.body;
+  console.log(permission_code, role_code);
   const role = await Role.findOne({
     where: { role_code: role_code },
   });
